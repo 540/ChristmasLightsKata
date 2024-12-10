@@ -1,20 +1,27 @@
 export class ChristmasLights {
-    private lights: number = 0
     private lightsMatrix: boolean[][] = Array.from({ length: 1000 }, () => Array(1000).fill(false));
 
     public getLightsOn = () => {
         return this.lightsMatrix.flat().filter(light => light).length;
     }
+    //   x      x     x
+   //y  [x0,y0] 0 [x999, y0]
+   //y  [x0,y1] 0 [x999, y1]
+   //y  [x0,y999] 0 [x999, y999]
 
-    public turnOn = (startCorner: number[], endCorner: number[]) : void => {
-        this.lightsMatrix[startCorner[0]][endCorner[0]] = true;
+    public turnOn = (startPositionColumn: number, startPositionRow: number, endPositionColumn: number, endPositionRow: number) : void => {
+        for (let column = startPositionColumn; column <= endPositionColumn; column++) {
+            for (let row = startPositionRow; row <= endPositionRow; row++) {
+                this.lightsMatrix[row][column] = true
+            }
+        }
     }
 
-    public turnOff = (startCorner: number[], endCorner: number[]) : void => {
-        this.lights = 0
-    }
-
-    public toggle(startCorner: number[], endCorner: number[]) {
-        this.lights = 1000000
+    public turnOff = (startPositionColumn: number, startPositionRow: number, endPositionColumn: number, endPositionRow: number) => {
+        for (let column = startPositionColumn; column <= endPositionColumn; column++) {
+            for (let row = startPositionRow; row <= endPositionRow; row++) {
+                this.lightsMatrix[row][column] = false
+            }
+        }
     }
 }
